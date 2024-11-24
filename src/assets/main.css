@@ -1,0 +1,32 @@
+@import './base.css';
+@import './tech.css';
+
+body {
+  margin: 0;
+  background: var(--body-bg);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
+    sans-serif;
+  overflow: hidden;
+}
+
+body,
+#app,
+main,
+#main {
+  height: 100vh;
+  max-height: 100vh;
+}
+
+body * {
+  color: var(--body-text-color);
+  user-select: none;
+}
+
+main {
+  padding: 1rem;
+}
+
+h1[consoleheadline] {
+  font-size: 3rem;
+  font-weight: 900;
+}
