@@ -74,7 +74,7 @@ export default {
             this.game.cells[y][x] = count_bombs(this.game.cells, x, y)
           }
         }
-      }
+      }     
     },
     check_win() {
 
@@ -156,12 +156,12 @@ export default {
 </script>
 
 <template>
-  <div class="dp-flex fd-c gap-4 ai-c jc-c h100">
+  <div class="dp-flex fd-c gap-4 ai-c jc-c h100 var-cell-width">
     <h1>Level: {{ game.rules.dimensions.x - 4 }}</h1>
     <h2>Total Bomb Count: {{ game.rules.bomb_count }}</h2>
-    <div class="dp-flex fd-c gap-1 ai-c jc-c" id="game-board">
-      <div v-for="(row, y) in game.state" class="dp-flex gap-1">
-        <div v-for="(cell, x) in row" @click="trigger(x, y)" class="cell dp-flex ai-c jc-c" clickable
+    <div class="dp-flex fd-c gap-c ai-c jc-c" id="game-board">
+      <div v-for="(row, y) in game.state" :key="y" class="dp-flex gap-c">
+        <div v-for="(cell, x) in row" :key="x" @click="trigger(x, y)" class="cell dp-flex ai-c jc-c" clickable
           :style="cssForState(cell)">
           <Bomb v-if="cell == 'BOMB'" color="white" stroke-width="3" height="40%" width="40%" />
           <Flag v-else-if="cell == 'FLAG'" color="white" stroke-width="3" height="40%" width="40%" />
@@ -199,6 +199,10 @@ export default {
 </template>
 
 <style scoped>
+.var-cell-width {
+  --cell-width: calc(min(80vw, 65vh) / (v-bind("game.rules.dimensions.x")))
+}
+
 #game-board {
   position: relative;
 }
@@ -213,7 +217,7 @@ export default {
   & div {
     padding: 1rem;
     border-radius: 1rem;
-    font-size: calc(min(80vw, 45vh) / (v-bind("game.rules.dimensions.x")) / 3);
+    font-size: calc(var(--cell-width) / 3);
   }
 }
 
@@ -231,9 +235,13 @@ export default {
   }
 }
 
+.gap-c {
+  gap: calc(2rem / v-bind("game.rules.dimensions.x-1"));
+}
+
 .cell {
-  width: calc(min(80vw, 45vh) / (v-bind("game.rules.dimensions.x")));
-  height: calc(min(80vw, 45vh) / (v-bind("game.rules.dimensions.y")));
+  width: calc(var(--cell-width) - 1rem);
+  height: calc(var(--cell-width) - 1rem);
   background-color: #444;
   transition: .05s all ease-out;
   color: maroon;
@@ -241,7 +249,7 @@ export default {
 
   & span {
     color: white;
-    font-size: calc(min(80vw, 45vh) / (v-bind("game.rules.dimensions.x")) / 3);
+    font-size: calc(var(--cell-width) / 3);
     font-weight: bold;
   }
 
