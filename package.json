@@ -1,6 +1,6 @@
 {
-  "name": "minesweeper-vue",
-  "version": "0.0.1",
+  "name": "mines.fyshi.app",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
